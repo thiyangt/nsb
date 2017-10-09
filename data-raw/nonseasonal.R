@@ -85,3 +85,7 @@ return(best_method)
 }
 
 BESTsimA <- lapply(simA, apply, 2, best_method, xx=6)
+
+# Things that should move to the package
+#simA- simulated time series
+#BESTsimA - best forecasting method for each simulated time series
