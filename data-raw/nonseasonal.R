@@ -86,6 +86,41 @@ return(best_method)
 
 BESTsimA <- lapply(simA, apply, 2, best_method, xx=6)
 
+# Simulate series with ETS function
+
+#etsM3 <- lapply(yearly_m3, function(ts) ets(as.ts(c(ts$x, ts$xx))))
+
+# simulated 1000 series from the models in arimaM3.
+# simA is a list, and each element in the list is a matrix of 1000 columns and
+# number of raws in the matrix equals to the full length(training+test) of the corresponding series in M3
+# simA returns a list of matrices each contains 1000 columns. 645 matrices are in the list.
+set.seed(2)
+simE <- lapply(etsM3,
+							 function(temp){
+							 	length_series <- length(temp)
+							 	matE <- ts(matrix(0, ncol=1000, nrow=length_series))
+							 	for(i in 1:1000)
+							 		matE[,i] <- simulate(temp, nsim=length_series)
+							 	return (matE)})
+
+# simulate function note:
+#Future=T, the simulated observations are conditional on the
+#historical observations. In other words, they are possible future sample paths
+#of the time series. But if future=FALSE, the historical data are ignored, and the
+#simulations are possible realizations of the time series models that are
+#not connected to the original data.
+#
+
+BESTsimE <- lapply(simE, apply, 2, best_method, xx=6)
+
 # Things that should move to the package
-#simA- simulated time series
-#BESTsimA - best forecasting method for each simulated time series
+#simA- simulated time series by using auto.arima
+#simE - simulated time series using ets
+#BESTsimA - best forecasting method for each simulated time series in simA
+#BESTsimE - best forecasting method for each simulated time series in simE
+
+devtools::use_data(simA)
+devtools::use_data(BESTsimA)
+
+devtools::use_data(simE)
+devtools::use_data(BESTsimE)

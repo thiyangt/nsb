@@ -8,3 +8,4 @@ Description: Simulated time series based on yearly series of M3 competition data
 License: CC0
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.0.1
