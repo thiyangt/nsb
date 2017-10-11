@@ -3164,9 +3164,8 @@ simA$N0001
 #> 16  15330.743    18401.19
 #> 17  15431.770    18596.29
 #> 18  15761.499    18925.81
+
 # TO see the corresponding best forecasting method for each series
-class(BESTsimA$N0001)
-#> [1] "character"
 BESTsimA$N0001
 #>                          Series 1                          Series 2 
 #>          "Random walk with drift"          "Random walk with drift" 

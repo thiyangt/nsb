@@ -34,8 +34,8 @@ This is a basic example which shows you how to solve a common problem:
 # To see the elements in the first enty of the list of simA
 library(nsb)
 simA$N0001
+
 # TO see the corresponding best forecasting method for each series
-class(BESTsimA$N0001)
 BESTsimA$N0001
 
 ```
