@@ -124,3 +124,138 @@ devtools::use_data(BESTsimA)
 
 devtools::use_data(simE)
 devtools::use_data(BESTsimE)
+
+##########################################################
+#
+# Best forecasting method for each yearly M3 series and MASE calculated from each method
+#(auto.arima, ets, rwd, rw, wn)
+#
+###########################################################
+
+bestFORm3Annual <- lapply(yearly_m3,
+													function(temp){
+														training <- temp$x
+														testing <- temp$xx
+														h <- length(testing)
+
+														# auto.arima
+														fitArima <- auto.arima(training)
+														forecastArima <- forecast(fitArima, h)
+														ARIMA <- accuracy(forecastArima,testing)[2,6]
+
+
+														# ETS models
+														fitEts <- ets(training)
+														forecastEts <- forecast(fitEts, h)
+														ETS <- accuracy(forecastEts,testing)[2,6]
+
+														# WN
+
+														fitWN <- Arima(training,order=c(0,0,0))
+														forecastWN <- forecast(fitWN, h)
+														WN <- accuracy(forecastWN,testing)[2,6]
+
+														# RW
+
+														fitRW <- Arima(training,order=c(0,1,0))
+														forecastRW <- forecast(fitRW, h)
+														RW <- accuracy(forecastRW,testing)[2,6]
+
+														# RD
+														fitRWD <- Arima(training,order=c(0,1,0), include.drift=T)
+														forecastRWD <- forecast(fitRWD,h)
+														RWD <- accuracy(forecastRWD,testing)[2,6]
+
+
+														MaseM3 <- data.frame(ARIMA, ETS, WN, RW, RWD)
+
+														names(MaseM3) <- c("auto.arima", "ets", "WN", "RW", "RWD")
+														MaseM3_min <- which.min(MaseM3)
+
+														if (MaseM3_min==1) {
+															MaseM3$bestMethod <- as.character(fitArima)
+														} else if (MaseM3_min==2) {
+															MaseM3$bestMethod <- as.character(fitEts)
+														} else if (MaseM3_min==3) {
+															MaseM3$bestMethod <- as.character(fitWN)
+														}  else if (MaseM3_min==4) {
+															MaseM3$bestMethod <- as.character(fitRW)
+														}else
+															MaseM3$bestMethod <- as.character(fitRWD)
+
+														return(MaseM3)
+
+
+													})
+maseM3df <- do.call("rbind", bestFORm3Annual) # Combine all dataframes into one
+library(dplyr)
+maseM3df <- dplyr::add_rownames(maseM3df, "ID")
+
+devtools::use_data(maseM3df)
+
+# Finding the best MASE from each method (auto.arima, ets, rw, rwd,wn)for each time series in
+# the M1 competition
+data(M1)
+
+# Extract annual data
+yearly_m1 <- subset(M1, "yearly")
+
+bestFORm1Annual <- lapply(yearly_m1,
+													function(temp){
+														training <- temp$x
+														testing <- temp$xx
+														h <- length(testing)
+
+														# auto.arima
+														fitArima <- auto.arima(training)
+														forecastArima <- forecast(fitArima, h)
+														ARIMA <- accuracy(forecastArima,testing)[2,6]
+
+
+														# ETS models
+														fitEts <- ets(training)
+														forecastEts <- forecast(fitEts, h)
+														ETS <- accuracy(forecastEts,testing)[2,6]
+
+														# WN
+
+														fitWN <- Arima(training,order=c(0,0,0))
+														forecastWN <- forecast(fitWN, h)
+														WN <- accuracy(forecastWN,testing)[2,6]
+
+														# RW
+
+														fitRW <- Arima(training,order=c(0,1,0))
+														forecastRW <- forecast(fitRW, h)
+														RW <- accuracy(forecastRW,testing)[2,6]
+
+														# RD
+														fitRWD <- Arima(training,order=c(0,1,0), include.drift=T)
+														forecastRWD <- forecast(fitRWD,h)
+														RWD <- accuracy(forecastRWD,testing)[2,6]
+
+
+														MaseM3 <- data.frame(ARIMA, ETS, WN, RW, RWD)
+
+														names(MaseM3) <- c("auto.arima", "ets", "WN", "RW", "RWD")
+														MaseM3_min <- which.min(MaseM3)
+
+														if (MaseM3_min==1) {
+															MaseM3$bestMethod <- as.character(fitArima)
+														} else if (MaseM3_min==2) {
+															MaseM3$bestMethod <- as.character(fitEts)
+														} else if (MaseM3_min==3) {
+															MaseM3$bestMethod <- as.character(fitWN)
+														}  else if (MaseM3_min==4) {
+															MaseM3$bestMethod <- as.character(fitRW)
+														}else
+															MaseM3$bestMethod <- as.character(fitRWD)
+
+														return(MaseM3)
+
+
+													})
+maseM1df <- do.call("rbind", bestFORm1Annual) # Combine all dataframes into one
+library(dplyr)
+maseM1df <- dplyr::add_rownames(maseM1df, "ID")
+devtools::use_data(maseM1df)
