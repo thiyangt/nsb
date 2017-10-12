@@ -39,10 +39,10 @@ simA$N0001
 BESTsimA$N0001
 
 # dataframe of MASE values for M3 yearly series
- head(maseM3df)
+head(maseM3df)
 
 # dataframe of MASE values for M1 yearly series
- head(maseM1df)
+head(maseM1df)
 ```
 
 
