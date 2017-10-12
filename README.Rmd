@@ -38,6 +38,11 @@ simA$N0001
 # TO see the corresponding best forecasting method for each series
 BESTsimA$N0001
 
+# dataframe of MASE values for M3 yearly series
+ head(maseM3df)
+
+# dataframe of MASE values for M1 yearly series
+ head(maseM1df)
 ```
 
 

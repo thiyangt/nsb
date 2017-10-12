@@ -4167,4 +4167,38 @@ BESTsimA$N0001
 #>          "Random walk with drift"          "Random walk with drift" 
 #>                        Series 999                       Series 1000 
 #>                    "ARIMA(0,2,0)"                      "ETS(M,A,N)"
+
+# dataframe of MASE values for M3 yearly series
+head(maseM3df)
+#>      ID auto.arima       ets        WN        RW       RWD
+#> 1 N0001  1.5669735 1.5634378 15.420399 7.7035176 4.2035176
+#> 2 N0002  1.6983879 1.6984250  1.772517 1.6983879 0.6123443
+#> 3 N0003  0.3752202 0.3751887  0.469787 0.3752202 1.3080670
+#> 4 N0004  0.8679117 1.2012517  3.420810 0.8679117 0.8839856
+#> 5 N0005  1.4364704 1.4009318  1.539534 1.4010703 1.6189685
+#> 6 N0006  3.1417456 0.7073092  4.016509 0.7073092 3.1417456
+#>                bestMethod
+#> 1              ETS(M,A,N)
+#> 2 ARIMA(0,1,0) with drift
+#> 3              ETS(M,N,N)
+#> 4            ARIMA(0,1,0)
+#> 5              ETS(M,N,N)
+#> 6              ETS(A,N,N)
+
+# dataframe of MASE values for M1 yearly series
+head(maseM1df)
+#>     ID auto.arima       ets       WN        RW       RWD
+#> 1 YAF2  10.527612 10.318771 24.80619 13.524283 10.527612
+#> 2 YAF3   5.713867  7.699313 15.89753  7.789490  5.225965
+#> 3 YAF4   8.633590  7.656257 22.89188 11.556325  8.440105
+#> 4 YAF5   2.940278  2.955540 10.09449  3.815914  2.059376
+#> 5 YAF6  10.127047  9.889759 21.44277 13.185352 11.801128
+#> 6 YAF7   5.543393  3.595369 16.00305  7.770786  5.699212
+#>                bestMethod
+#> 1              ETS(A,A,N)
+#> 2 ARIMA(0,1,0) with drift
+#> 3             ETS(M,Ad,N)
+#> 4 ARIMA(0,1,0) with drift
+#> 5              ETS(M,A,N)
+#> 6              ETS(M,A,N)
 ```
