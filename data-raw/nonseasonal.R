@@ -17,7 +17,7 @@ arimaM3 <- lapply(yearly_m3, function(ts) auto.arima(as.ts(c(ts$x, ts$xx))))
 # simA returns a list of matrices each contains 1000 columns. 645 matrices are in the list.
 simA <- lapply(arimaM3,
 												function(temp){
-												length_series <- length(temp)
+												length_series <- length(temp$x)
 												mat <- ts(matrix(0, ncol=1000, nrow=length_series))
 												for(i in 1:1000)
 												mat[,i] <- simulate(temp, nsim=length_series)
@@ -25,12 +25,12 @@ simA <- lapply(arimaM3,
 
 # Finding the best forecasting model for each simulated series
 
-tail.ts <- function(data, n){
+tail.ts <- function(data, n, Freq){
 	data <- as.ts(data)
 	window(data, start=tsp(data)[2]-(n-1)/frequency(data))
 }
 
-head.ts <- function(data, n){
+head.ts <- function(data, n, Freq){
 	data <- as.ts(data)
 	window(data, end=n)
 }
@@ -97,7 +97,7 @@ BESTsimA <- lapply(simA, apply, 2, best_method, xx=6)
 set.seed(2)
 simE <- lapply(etsM3,
 							 function(temp){
-							 	length_series <- length(temp)
+							 	length_series <- length(temp$x)
 							 	matE <- ts(matrix(0, ncol=1000, nrow=length_series))
 							 	for(i in 1:1000)
 							 		matE[,i] <- simulate(temp, nsim=length_series)
